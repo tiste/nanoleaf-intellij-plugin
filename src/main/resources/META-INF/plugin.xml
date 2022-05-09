@@ -1,18 +1,23 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <id>com.github.tiste.nanoleafintellijplugin</id>
-    <name>nanoleaf-intellij-plugin</name>
+    <name>Nanoleaf</name>
     <vendor>tiste</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.tiste.nanoleafintellijplugin.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.tiste.nanoleafintellijplugin.services.MyProjectService"/>
-    </extensions>
+        <applicationService
+                serviceImplementation="com.github.tiste.nanoleafintellijplugin.settings.ApplicationState"/>
+        <applicationService
+                serviceImplementation="com.github.tiste.nanoleafintellijplugin.services.NanoleafService"/>
 
-    <applicationListeners>
-        <listener class="com.github.tiste.nanoleafintellijplugin.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
+        <applicationConfigurable parentId="tools"
+                                 instance="com.github.tiste.nanoleafintellijplugin.settings.ApplicationConfigurable"
+                                 id="com.github.tiste.nanoleafintellijplugin.settings.ApplicationConfigurable"
+                                 displayName="Nanoleaf"/>
+
+        <testStatusListener
+                implementation="com.github.tiste.nanoleafintellijplugin.listeners.TestSuiteListener"/>
+    </extensions>
 </idea-plugin>
