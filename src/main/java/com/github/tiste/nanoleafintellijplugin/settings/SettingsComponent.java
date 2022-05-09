@@ -11,7 +11,9 @@ public class SettingsComponent {
     private final JBTextField ipAddress = new JBTextField("0.0.0.0");
     private final JBTextField apiKey = new JBTextField("");
 
-    public SettingsComponent() {
+    public SettingsComponent(String[] effects) {
+        System.out.println(effects[0]);
+
         mainPanel = FormBuilder.createFormBuilder()
                 .addLabeledComponent(new JBLabel("Enter Nanoleaf IP address: "), ipAddress, 1, false)
                 .addLabeledComponent(new JBLabel("Enter Nanoleaf API key: "), apiKey, 1, false)
