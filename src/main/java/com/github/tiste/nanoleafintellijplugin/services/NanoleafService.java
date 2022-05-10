@@ -50,7 +50,7 @@ public class NanoleafService {
                     System.out.println("Failed to update to previous effect");
                 }
             }
-        }, 2, TimeUnit.SECONDS);
+        }, 3, TimeUnit.SECONDS);
     }
 
     private String fetchCurrentEffect() throws IOException {
