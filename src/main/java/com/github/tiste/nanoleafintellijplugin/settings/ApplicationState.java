@@ -15,6 +15,8 @@ import org.jetbrains.annotations.Nullable;
 public class ApplicationState implements PersistentStateComponent<ApplicationState> {
     public String ipAddress = "";
     public String apiKey = "";
+    public String redEffect = "";
+    public String greenEffect = "";
 
     @Nullable
     @Override

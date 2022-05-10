@@ -1,12 +1,10 @@
 package com.github.tiste.nanoleafintellijplugin.settings;
 
-import com.github.tiste.nanoleafintellijplugin.services.NanoleafService;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.util.NlsContexts;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import java.io.IOException;
 
 public class ApplicationConfigurable implements Configurable {
     private SettingsComponent settingsComponent;
@@ -18,18 +16,7 @@ public class ApplicationConfigurable implements Configurable {
 
     @Override
     public @Nullable JComponent createComponent() {
-        NanoleafService nanoleafService = NanoleafService.getInstance();
-        ApplicationState settings = ApplicationState.getInstance();
-        String[] effects = new String[]{};
-
-        try {
-            if (!settings.ipAddress.isEmpty() && !settings.apiKey.isEmpty()) {
-                effects = nanoleafService.fetchEffects();
-            }
-        } catch (IOException e) {
-            System.out.println("Fail to fetch effects");
-        }
-        settingsComponent = new SettingsComponent(effects);
+        settingsComponent = new SettingsComponent();
         return settingsComponent.getPanel();
     }
 
@@ -37,7 +24,10 @@ public class ApplicationConfigurable implements Configurable {
     public boolean isModified() {
         ApplicationState settings = ApplicationState.getInstance();
 
-        return !settings.ipAddress.equals(settingsComponent.getIpAddress()) || !settings.apiKey.equals(settingsComponent.getApiKey());
+        return !settings.ipAddress.equals(settingsComponent.getIpAddress()) ||
+                !settings.apiKey.equals(settingsComponent.getApiKey()) ||
+                !settings.redEffect.equals(settingsComponent.getRedEffect()) ||
+                !settings.greenEffect.equals(settingsComponent.getGreenEffect());
     }
 
     @Override
@@ -46,6 +36,8 @@ public class ApplicationConfigurable implements Configurable {
 
         settings.ipAddress = settingsComponent.getIpAddress();
         settings.apiKey = settingsComponent.getApiKey();
+        settings.redEffect = settingsComponent.getRedEffect();
+        settings.greenEffect = settingsComponent.getGreenEffect();
     }
 
     @Override
