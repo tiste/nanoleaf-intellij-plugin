@@ -14,6 +14,8 @@ Configuration is simple: set the static IP address of your Nanoleaf, an API key,
 bar effect from your Nanoleaf effects list, and do some great TDD!
 <!-- Plugin description end -->
 
+![Demo](/assets/demo.gif)
+
 ## Installation
 
 - Using IDE built-in plugin system:
