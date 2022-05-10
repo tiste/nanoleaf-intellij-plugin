@@ -25,6 +25,7 @@ public class TestSuiteListener extends TestStatusListener {
                     NanoleafService.getInstance().setTestPassed(root.isPassed());
                 } catch (IOException e) {
                     System.out.println("Failed to update test passed");
+                    System.out.println(e);
                 }
             }
         }

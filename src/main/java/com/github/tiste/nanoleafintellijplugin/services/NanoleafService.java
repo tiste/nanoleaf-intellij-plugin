@@ -30,6 +30,20 @@ public class NanoleafService {
         return mapper.readValue(response.body().byteStream(), String[].class);
     }
 
+    public String getNewApiKey() throws IOException {
+        ApplicationState settings = ApplicationState.getInstance();
+
+        ObjectMapper mapper = new ObjectMapper();
+        Request request = new Request.Builder()
+                .url("http://" + settings.ipAddress + "/api/v1/new")
+                .post(RequestBody.create(new byte[]{}, null))
+                .build();
+
+        Response response = client.newCall(request).execute();
+
+        return mapper.readValue(response.body().string(), AuthTokenEntity.class).getAuthToken();
+    }
+
     public void setTestPassed(boolean passed) throws IOException {
         ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(5);
         ApplicationState settings = ApplicationState.getInstance();
@@ -41,13 +55,13 @@ public class NanoleafService {
             this.setEffect(settings.redEffect);
         }
 
-
         exec.schedule(new Runnable() {
             public void run() {
                 try {
                     setEffect(currentEffect);
                 } catch (IOException e) {
                     System.out.println("Failed to update to previous effect");
+                    System.out.println(e);
                 }
             }
         }, 3, TimeUnit.SECONDS);
