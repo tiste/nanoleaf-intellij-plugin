@@ -14,7 +14,9 @@ Configuration is simple: set the static IP address of your Nanoleaf, an API key,
 bar effect from your Nanoleaf effects list, and do some great TDD!
 <!-- Plugin description end -->
 
-![Demo](/assets/demo.gif)
+<p align="center">
+  <img src="/assets/demo.gif" alt="Demo" />
+</p>
 
 ## Installation
 
@@ -29,6 +31,15 @@ bar effect from your Nanoleaf effects list, and do some great TDD!
   Download the [latest release](https://github.com/tiste/nanoleaf-intellij-plugin/releases/latest) and install it
   manually using
   <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
+
+## Configuration
+
+![Settings](/assets/settings.png)
+
+1. Add your Nanoleaf IP address
+2. Ask or paste your API key
+3. Select one of your preferred effects for red/green bar
+4. Enjoy!
 
 ---
 Plugin based on the [IntelliJ Platform Plugin Template][template].
