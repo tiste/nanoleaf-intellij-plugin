@@ -8,14 +8,13 @@ import org.jetbrains.annotations.Nullable;
 import java.io.IOException;
 
 public class TestSuiteListener extends TestStatusListener {
-
     @Override
     public void testSuiteFinished(@Nullable AbstractTestProxy root) {
-        if (root != null) {
+        if (root != null && !root.isDefect()) {
             try {
                 NanoleafService.getInstance().setTestPassed(root.isPassed());
             } catch (IOException e) {
-                System.out.println("Fail to update test passed");
+                System.out.println("Failed to update test passed");
             }
         }
     }

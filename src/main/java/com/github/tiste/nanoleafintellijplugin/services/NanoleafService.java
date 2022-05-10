@@ -6,6 +6,8 @@ import com.intellij.openapi.components.ServiceManager;
 import okhttp3.*;
 
 import java.io.IOException;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class NanoleafService {
     public static final MediaType TEXT = MediaType.get("text/plain; charset=utf-8");
@@ -28,7 +30,30 @@ public class NanoleafService {
         return mapper.readValue(response.body().byteStream(), String[].class);
     }
 
-    public String fetchCurrentEffect() throws IOException {
+    public void setTestPassed(boolean passed) throws IOException {
+        ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(5);
+        ApplicationState settings = ApplicationState.getInstance();
+        String currentEffect = this.fetchCurrentEffect();
+
+        if (passed) {
+            this.setEffect(settings.greenEffect);
+        } else {
+            this.setEffect(settings.redEffect);
+        }
+
+
+        exec.schedule(new Runnable() {
+            public void run() {
+                try {
+                    setEffect(currentEffect);
+                } catch (IOException e) {
+                    System.out.println("Failed to update to previous effect");
+                }
+            }
+        }, 2, TimeUnit.SECONDS);
+    }
+
+    private String fetchCurrentEffect() throws IOException {
         ApplicationState settings = ApplicationState.getInstance();
 
         ObjectMapper mapper = new ObjectMapper();
@@ -41,22 +66,14 @@ public class NanoleafService {
         return mapper.readValue(response.body().byteStream(), String.class);
     }
 
-    public void setTestPassed(boolean passed) throws IOException {
+    private void setEffect(String effect) throws IOException {
         ApplicationState settings = ApplicationState.getInstance();
 
-        RequestBody body = RequestBody.create("{\"select\" : \"Jungle\"}", TEXT);
+        RequestBody body = RequestBody.create("{\"select\" : \"" + effect + "\"}", TEXT);
         Request request = new Request.Builder()
                 .url("http://" + settings.ipAddress + "/api/v1/" + settings.apiKey + "/effects")
                 .put(body)
                 .build();
         client.newCall(request).execute();
-
-        if (passed) {
-            System.out.println("Passé");
-            System.out.println(settings.ipAddress);
-        } else {
-            System.out.println("Pas passé");
-            System.out.println(settings.apiKey);
-        }
     }
 }

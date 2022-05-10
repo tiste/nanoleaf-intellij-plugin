@@ -62,8 +62,12 @@ public class SettingsComponent {
 
         ipAddress.setText(settings.ipAddress);
         apiKey.setText(settings.apiKey);
-        redEffects.setItem(settings.redEffect);
-        greenEffects.setItem(settings.greenEffect);
+
+        redEffects.removeAllItems();
+        redEffects.addItem(settings.redEffect);
+
+        greenEffects.removeAllItems();
+        greenEffects.addItem(settings.greenEffect);
     }
 
     private PopupMenuListener getEffectsPopupMenu() {
@@ -81,7 +85,7 @@ public class SettingsComponent {
                         effects = nanoleafService.fetchEffects();
                     }
                 } catch (IOException e) {
-                    System.out.println("Fail to fetch effects");
+                    System.out.println("Failed to fetch effects");
                 }
 
                 comboBox.setModel(new DefaultComboBoxModel<>(effects));
