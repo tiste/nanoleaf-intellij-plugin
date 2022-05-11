@@ -27,8 +27,8 @@ public class SettingsComponent {
                 .addLabeledComponent(new JBLabel("Enter Nanoleaf API key: "), apiKey, 1, false)
                 .addComponentToRightColumn(newApiKey, 1)
                 .addSeparator()
-                .addLabeledComponent(new JBLabel("Select red effect"), redEffects, 1, false)
-                .addLabeledComponent(new JBLabel("Select green effect"), greenEffects, 1, false)
+                .addLabeledComponent(new JBLabel("Select red effect:"), redEffects, 1, false)
+                .addLabeledComponent(new JBLabel("Select green effect:"), greenEffects, 1, false)
                 .addSeparator()
                 .addComponentFillVertically(new JPanel(), 0)
                 .getPanel();

@@ -15,7 +15,9 @@ bar effect from your Nanoleaf effects list, and do some great TDD!
 <!-- Plugin description end -->
 
 <p align="center">
-  <img src="/assets/demo.gif" alt="Demo" />
+  <a href="https://www.youtube.com/watch?v=zZb3pJ2FtMg">
+    <img src="/assets/demo.gif" alt="Demo" />
+  </a>
 </p>
 
 ## Installation
@@ -38,6 +40,7 @@ bar effect from your Nanoleaf effects list, and do some great TDD!
 
 1. Add your Nanoleaf IP address
 2. Ask or paste your API key
+   1. To get a new API key, you have to set the Nanoleaf in "discovery" mode (press the power button for 7 seconds)
 3. Select one of your preferred effects for red/green bar
 4. Enjoy!
 
