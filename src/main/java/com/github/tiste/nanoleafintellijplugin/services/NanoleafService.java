@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tiste.nanoleafintellijplugin.settings.ApplicationState;
 import com.intellij.openapi.components.ServiceManager;
 import okhttp3.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -44,27 +45,33 @@ public class NanoleafService {
         return mapper.readValue(response.body().string(), AuthTokenEntity.class).getAuthToken();
     }
 
-    public void setTestPassed(boolean passed) throws IOException {
-        ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(5);
+    public void setTestPassed(boolean passed) {
+        ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
         ApplicationState settings = ApplicationState.getInstance();
-        String currentEffect = this.fetchCurrentEffect();
 
-        if (passed) {
-            this.setEffect(settings.greenEffect);
-        } else {
-            this.setEffect(settings.redEffect);
-        }
+        new Thread(() -> {
+            try {
+                String currentEffect = fetchCurrentEffect();
 
-        exec.schedule(new Runnable() {
-            public void run() {
-                try {
-                    setEffect(currentEffect);
-                } catch (IOException e) {
-                    System.out.println("Failed to update to previous effect");
-                    System.out.println(e);
+                if (passed) {
+                    setEffect(settings.greenEffect);
+                } else {
+                    setEffect(settings.redEffect);
                 }
+
+                exec.schedule(() -> {
+                    try {
+                        setEffect(currentEffect);
+                    } catch (IOException e) {
+                        System.out.println("Failed to update to previous effect");
+                        System.out.println(e);
+                    }
+                }, 3, TimeUnit.SECONDS);
+            } catch (IOException e) {
+                System.out.println("Failed to update effect");
+                System.out.println(e);
             }
-        }, 3, TimeUnit.SECONDS);
+        }).start();
     }
 
     private String fetchCurrentEffect() throws IOException {
@@ -81,6 +88,7 @@ public class NanoleafService {
     }
 
     private void setEffect(String effect) throws IOException {
+        System.out.println("Update to effect " + effect);
         ApplicationState settings = ApplicationState.getInstance();
 
         RequestBody body = RequestBody.create("{\"select\" : \"" + effect + "\"}", TEXT);
@@ -88,6 +96,16 @@ public class NanoleafService {
                 .url("http://" + settings.ipAddress + "/api/v1/" + settings.apiKey + "/effects")
                 .put(body)
                 .build();
-        client.newCall(request).execute();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+            }
+        });
     }
 }

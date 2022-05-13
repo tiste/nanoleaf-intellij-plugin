@@ -5,7 +5,6 @@ import com.intellij.execution.testframework.AbstractTestProxy;
 import com.intellij.execution.testframework.TestStatusListener;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -21,12 +20,7 @@ public class TestSuiteListener extends TestStatusListener {
             boolean isFirstRunOrDebounce = numberOfRun == 0 || diff > 0;
 
             if (isFirstRunOrDebounce) {
-                try {
-                    NanoleafService.getInstance().setTestPassed(root.isPassed());
-                } catch (IOException e) {
-                    System.out.println("Failed to update test passed");
-                    System.out.println(e);
-                }
+                NanoleafService.getInstance().setTestPassed(root.isPassed());
             }
         }
 
