@@ -3,6 +3,8 @@
 # nanoleaf-intellij-plugin Changelog
 
 ## [Unreleased]
+### Fixed
+- Add publishing plugin in CI
 
 ## [1.0.1]
 ### Fixed
