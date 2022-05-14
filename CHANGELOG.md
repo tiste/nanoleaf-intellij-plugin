@@ -3,6 +3,8 @@
 # nanoleaf-intellij-plugin Changelog
 
 ## [Unreleased]
+
+## [1.0.1]
 ### Fixed
 - Launch Nanoleaf http calls from thread
 
