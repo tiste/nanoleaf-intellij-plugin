@@ -3,6 +3,8 @@
 # nanoleaf-intellij-plugin Changelog
 
 ## [Unreleased]
+
+## [1.0.3]
 ### Added
 - Remove `pluginUntilBuild` to include all future versions
 
