@@ -3,6 +3,8 @@
 # nanoleaf-intellij-plugin Changelog
 
 ## [Unreleased]
+
+## [1.0.6]
 ### Added
 - Update `pluginUntilBuild` to include `232.*`
 
