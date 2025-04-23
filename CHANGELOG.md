@@ -4,7 +4,7 @@
 
 ## [Unreleased]
 ### Added
-- Update `pluginUntilBuild` to include `241.*`
+- Update `pluginUntilBuild` to include all future versions
 
 ## [1.0.7]
 ### Added
